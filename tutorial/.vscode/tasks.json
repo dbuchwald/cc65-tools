@@ -1,0 +1,70 @@
+{
+  // See https://go.microsoft.com/fwlink/?LinkId=733558
+  // for the documentation about the tasks.json format
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "group": "build",
+      "label": "Build 01_nop_fill",
+      "type": "shell",
+      "command": "docker run --rm -v${workspaceFolder}/01_nop_fill:/mnt/project dawidbuchwald/cc65-tools-base ./build.sh",
+      "problemMatcher": [ "$gcc" ]
+    },
+    {
+      "group": "build",
+      "label": "Test 01_nop_fill",
+      "type": "shell",
+      "command": "docker run --rm -v${workspaceFolder}/01_nop_fill:/mnt/project dawidbuchwald/cc65-tools-base ./test.sh",
+      "problemMatcher": []
+    },
+    {
+      "group": "build",
+      "label": "Clean 01_nop_fill",
+      "type": "shell",
+      "command": "docker run --rm -v${workspaceFolder}/01_nop_fill:/mnt/project dawidbuchwald/cc65-tools-base ./clean.sh",
+      "problemMatcher": []
+    },
+    {
+      "group": "build",
+      "label": "Build 02_nop_fill",
+      "type": "shell",
+      "command": "docker run --rm -v${workspaceFolder}:/mnt/project dawidbuchwald/cc65-tools-make -C 02_nop_fill all",
+      "problemMatcher": [ "$gcc" ]
+    },
+    {
+      "group": "build",
+      "label": "Test 02_nop_fill",
+      "type": "shell",
+      "command": "docker run --rm -v${workspaceFolder}:/mnt/project dawidbuchwald/cc65-tools-make -C 02_nop_fill test",
+      "problemMatcher": []
+    },
+    {
+      "group": "build",
+      "label": "Clean 02_nop_fill",
+      "type": "shell",
+      "command": "docker run --rm -v${workspaceFolder}:/mnt/project dawidbuchwald/cc65-tools-make -C 02_nop_fill clean",
+      "problemMatcher": []
+    },
+    {
+      "group": "build",
+      "label": "Build 03_nop_fill",
+      "type": "shell",
+      "command": "docker run --rm -v${workspaceFolder}:/mnt/project dawidbuchwald/cc65-tools-make -C 03_nop_fill all",
+      "problemMatcher": [ "$gcc" ]
+    },
+    {
+      "group": "build",
+      "label": "Test 03_nop_fill",
+      "type": "shell",
+      "command": "docker run --rm -v${workspaceFolder}:/mnt/project dawidbuchwald/cc65-tools-make -C 03_nop_fill test",
+      "problemMatcher": []
+    },
+    {
+      "group": "build",
+      "label": "Clean 03_nop_fill",
+      "type": "shell",
+      "command": "docker run --rm -v${workspaceFolder}:/mnt/project dawidbuchwald/cc65-tools-make -C 03_nop_fill clean",
+      "problemMatcher": []
+    }
+  ]
+}
