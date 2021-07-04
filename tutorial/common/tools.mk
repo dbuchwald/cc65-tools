@@ -21,6 +21,7 @@ MD5_BINARY=md5sum
 
 # Standard utilities (rm/mkdir)
 RM_BINARY=rm
+RM_FLAGS=-f
 MKDIR_BINARY=mkdir
 MKDIR_FLAGS=-p
 CP_BINARY=cp
