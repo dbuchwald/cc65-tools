@@ -1,13 +1,17 @@
-nop_fill.o: nop_fill.s firmware.cfg
-	ca65 --cpu 65C02 -t none -o nop_fill.o -l nop_fill.lst nop_fill.s
+BUILD_FOLDER = ../build
+TEMP_FOLDER = $(BUILD_FOLDER)/02_nop_fill
 
-02_nop_fill.bin: nop_fill.o
-	ld65 -C firmware.cfg -o 02_nop_fill.bin nop_fill.o
+$(TEMP_FOLDER)/nop_fill.o: nop_fill.s firmware.cfg
+	mkdir -p $(TEMP_FOLDER)
+	ca65 --cpu 65C02 -t none -o $(TEMP_FOLDER)/nop_fill.o -l $(TEMP_FOLDER)/nop_fill.lst nop_fill.s
 
-all: 02_nop_fill.bin
+$(BUILD_FOLDER)/02_nop_fill.bin: $(TEMP_FOLDER)/nop_fill.o
+	ld65 -C firmware.cfg -o $(BUILD_FOLDER)/02_nop_fill.bin $(TEMP_FOLDER)/nop_fill.o
 
-test: 02_nop_fill.bin
-	hexdump -C 02_nop_fill.bin
+all: $(BUILD_FOLDER)/02_nop_fill.bin
+
+test: $(BUILD_FOLDER)/02_nop_fill.bin
+	hexdump -C $(BUILD_FOLDER)/02_nop_fill.bin
 
 clean:
-	rm -f 02_nop_fill.bin nop_fill.o nop_fill.lst
+	rm -f $(BUILD_FOLDER)/02_nop_fill.bin $(TEMP_FOLDER)/nop_fill.o $(TEMP_FOLDER)/nop_fill.lst

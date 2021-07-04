@@ -2,17 +2,17 @@ include ../common/tools.mk
 
 ROM_NAME=03_nop_fill
 
-BUILD_ROOT=../build
-BUILD_FOLDER=$(BUILD_ROOT)/$(ROM_NAME)
+BUILD_FOLDER=../build
+TEMP_FOLDER=$(BUILD_FOLDER)/$(ROM_NAME)
 BIN_NAME=$(ROM_NAME).bin
 ASM_SOURCES=nop_fill.s
 FIRMWARE_CFG=firmware.cfg
 
-ASM_OBJECTS=$(ASM_SOURCES:%.s=$(BUILD_FOLDER)/%.o)
+ASM_OBJECTS=$(ASM_SOURCES:%.s=$(TEMP_FOLDER)/%.o)
 
 # Compile assembler sources
-$(BUILD_FOLDER)/%.o: %.s firmware.cfg
-	@$(MKDIR_BINARY) $(MKDIR_FLAGS) $(BUILD_FOLDER)
+$(TEMP_FOLDER)/%.o: %.s firmware.cfg
+	@$(MKDIR_BINARY) $(MKDIR_FLAGS) $(TEMP_FOLDER)
 	$(CA65_BINARY) $(CA65_FLAGS) -o $@ -l $(@:.o=.lst) $<
 
 # Link ROM image
