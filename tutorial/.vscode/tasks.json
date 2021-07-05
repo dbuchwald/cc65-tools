@@ -84,7 +84,8 @@
       "type": "pickString",
       "description": "Single project folder name",
       "options": [
-        "01_nop_fill"
+        "01_nop_fill",
+        "05_blink_vasm"
       ],
       "default": "01_nop_fill"
     }    

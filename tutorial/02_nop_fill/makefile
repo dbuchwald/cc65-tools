@@ -12,6 +12,7 @@ all: $(BUILD_FOLDER)/02_nop_fill.bin
 
 test: $(BUILD_FOLDER)/02_nop_fill.bin
 	hexdump -C $(BUILD_FOLDER)/02_nop_fill.bin
+	md5sum $(BUILD_FOLDER)/02_nop_fill.bin
 
 clean:
 	rm -f $(BUILD_FOLDER)/02_nop_fill.bin $(TEMP_FOLDER)/nop_fill.o $(TEMP_FOLDER)/nop_fill.lst $(TEMP_FOLDER)/02_nop_fill.map

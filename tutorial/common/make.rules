@@ -23,6 +23,7 @@ all: $(ROM_FILE)
 # Build and dump output
 test: $(ROM_FILE)
 	$(HEXDUMP_BINARY) $(HEXDUMP_FLAGS) $<
+	$(MD5_BINARY) $<
 
 # Clean build artifacts
 clean:

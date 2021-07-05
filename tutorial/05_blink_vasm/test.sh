@@ -5,7 +5,7 @@ BUILD_FOLDER=build
 set -x
 
 # Display contents of the ROM file
-hexdump -C ${BUILD_FOLDER}/01_nop_fill.bin
+hexdump -C ${BUILD_FOLDER}/05_blink_vasm.bin
 
 # Display also MD5 sum of the binary
-md5sum ${BUILD_FOLDER}/01_nop_fill.bin
+md5sum ${BUILD_FOLDER}/05_blink_vasm.bin
