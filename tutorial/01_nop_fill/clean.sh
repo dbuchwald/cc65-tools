@@ -6,4 +6,4 @@ TEMP_FOLDER=build/01_nop_fill
 set -x
 
 # Delete temporary files
-rm -f ${BUILD_FOLDER}/01_nop_fill.bin ${TEMP_FOLDER}/nop_fill.o ${TEMP_FOLDER}/nop_fill.lst
+rm -f ${BUILD_FOLDER}/01_nop_fill.bin ${TEMP_FOLDER}/nop_fill.o ${TEMP_FOLDER}/nop_fill.lst ${TEMP_FOLDER}/01_nop_fill.map

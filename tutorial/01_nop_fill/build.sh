@@ -13,4 +13,4 @@ mkdir -p ${TEMP_FOLDER}
 ca65 --cpu 65C02 -t none -o ${TEMP_FOLDER}/nop_fill.o -l ${TEMP_FOLDER}/nop_fill.lst ${SOURCE_FOLDER}/nop_fill.s
 
 # Link objects (*.o) to binary file (*.bin)
-ld65 -C ${SOURCE_FOLDER}/firmware.cfg -o ${BUILD_FOLDER}/01_nop_fill.bin ${TEMP_FOLDER}/nop_fill.o
+ld65 -C ${SOURCE_FOLDER}/firmware.cfg -o ${BUILD_FOLDER}/01_nop_fill.bin -m ${TEMP_FOLDER}/01_nop_fill.map ${TEMP_FOLDER}/nop_fill.o

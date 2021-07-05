@@ -21,4 +21,4 @@ test: $(ROM_BINARIES)
 	@$(MD5_BINARY) $^ 
 
 clean:
-	$(RM_BINARY) $(RM_FLAGS) $(ROM_BINARIES) $(ROM_BINARIES:%.bin=%/*.o) $(ROM_BINARIES:%.bin=%/*.lst)
+	$(RM_BINARY) $(RM_FLAGS) $(ROM_BINARIES) $(ROM_BINARIES:%.bin=%/*.o) $(ROM_BINARIES:%.bin=%/*.lst) $(ROM_BINARIES:%.bin=%/*.map)
