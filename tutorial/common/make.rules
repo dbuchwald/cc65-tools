@@ -4,11 +4,6 @@ BUILD_FOLDER=../build
 TEMP_FOLDER=$(BUILD_FOLDER)/$(ROM_NAME)
 BIN_NAME=$(ROM_NAME).bin
 
-ROM_NAME=03_nop_fill
-
-ASM_SOURCES=nop_fill.s
-FIRMWARE_CFG=firmware.cfg
-
 ASM_OBJECTS=$(ASM_SOURCES:%.s=$(TEMP_FOLDER)/%.o)
 
 # Compile assembler sources

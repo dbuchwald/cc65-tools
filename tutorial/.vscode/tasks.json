@@ -68,6 +68,27 @@
     },
     {
       "group": "build",
+      "label": "Build 04_reset",
+      "type": "shell",
+      "command": "docker run --rm -v${workspaceFolder}:/mnt/project dawidbuchwald/cc65-tools-make -C 04_reset all",
+      "problemMatcher": [ "$gcc" ]
+    },
+    {
+      "group": "build",
+      "label": "Test 04_reset",
+      "type": "shell",
+      "command": "docker run --rm -v${workspaceFolder}:/mnt/project dawidbuchwald/cc65-tools-make -C 04_reset test",
+      "problemMatcher": []
+    },
+    {
+      "group": "build",
+      "label": "Clean 04_reset",
+      "type": "shell",
+      "command": "docker run --rm -v${workspaceFolder}:/mnt/project dawidbuchwald/cc65-tools-make -C 04_reset clean",
+      "problemMatcher": []
+    },
+    {
+      "group": "build",
       "label": "Build All",
       "type": "shell",
       "command": "docker run --rm -v${workspaceFolder}:/mnt/project dawidbuchwald/cc65-tools-make all",
