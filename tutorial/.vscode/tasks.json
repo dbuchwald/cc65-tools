@@ -26,65 +26,36 @@
     },
     {
       "group": "build",
-      "label": "Build single (script)",
+      "label": "Build single project",
       "type": "shell",
-      "command": "docker run --rm -v${workspaceFolder}:/mnt/project dawidbuchwald/cc65-tools-base ./${input:scriptProjectID}/build.sh",
+      "command": "docker run --rm -v${workspaceFolder}:/mnt/project dawidbuchwald/cc65-tools-make -C ${input:projectID} all",
       "problemMatcher": []
     },
     {
       "group": "build",
-      "label": "Test single (script)",
+      "label": "Test single project",
       "type": "shell",
-      "command": "docker run --rm -v${workspaceFolder}:/mnt/project dawidbuchwald/cc65-tools-base ./${input:scriptProjectID}/test.sh",
+      "command": "docker run --rm -v${workspaceFolder}:/mnt/project dawidbuchwald/cc65-tools-make -C ${input:projectID} test",
       "problemMatcher": []
     },
     {
       "group": "build",
-      "label": "Clean single (script)",
+      "label": "Clean single project",
       "type": "shell",
-      "command": "docker run --rm -v${workspaceFolder}:/mnt/project dawidbuchwald/cc65-tools-base ./${input:scriptProjectID}/clean.sh",
-      "problemMatcher": []
-    },
-    {
-      "group": "build",
-      "label": "Build single (make)",
-      "type": "shell",
-      "command": "docker run --rm -v${workspaceFolder}:/mnt/project dawidbuchwald/cc65-tools-make -C ${input:makeProjectID} all",
-      "problemMatcher": []
-    },
-    {
-      "group": "build",
-      "label": "Test single (make)",
-      "type": "shell",
-      "command": "docker run --rm -v${workspaceFolder}:/mnt/project dawidbuchwald/cc65-tools-make -C ${input:makeProjectID} test",
-      "problemMatcher": []
-    },
-    {
-      "group": "build",
-      "label": "Clean single (make)",
-      "type": "shell",
-      "command": "docker run --rm -v${workspaceFolder}:/mnt/project dawidbuchwald/cc65-tools-make -C ${input:makeProjectID} clean",
+      "command": "docker run --rm -v${workspaceFolder}:/mnt/project dawidbuchwald/cc65-tools-make -C ${input:projectID} clean",
       "problemMatcher": []
     }
   ],
   "inputs" : [
     {
-      "id": "makeProjectID",
+      "id": "projectID",
       "type": "pickString",
-      "description": "Single project folder name",
-      "options": [
-        "02_nop_fill",
-        "03_nop_fill",
-        "04_reset"
-      ],
-      "default": "02_nop_fill"
-    },
-    {
-      "id": "scriptProjectID",
-      "type": "pickString",
-      "description": "Single project folder name",
+      "description": "Single project name",
       "options": [
         "01_nop_fill",
+        "02_nop_fill",
+        "03_nop_fill",
+        "04_reset",
         "05_blink_vasm"
       ],
       "default": "01_nop_fill"

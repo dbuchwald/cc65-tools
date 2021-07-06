@@ -1,6 +1,6 @@
 #!/bin/sh
-BUILD_FOLDER=build
-TEMP_FOLDER=build/05_blink_vasm
+BUILD_FOLDER=../build
+TEMP_FOLDER=${BUILD_FOLDER}/05_blink_vasm
 
 # Echo on
 set -x

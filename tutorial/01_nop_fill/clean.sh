@@ -1,6 +1,6 @@
 #!/bin/sh
-BUILD_FOLDER=build
-TEMP_FOLDER=build/01_nop_fill
+BUILD_FOLDER=../build
+TEMP_FOLDER=${BUILD_FOLDER}/01_nop_fill
 
 # Echo on
 set -x

@@ -1,5 +1,5 @@
 #!/bin/sh
-BUILD_FOLDER=build
+BUILD_FOLDER=../build
 
 # Echo on
 set -x
