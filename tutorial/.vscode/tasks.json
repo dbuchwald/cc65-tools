@@ -8,7 +8,7 @@
       "label": "Build All",
       "type": "shell",
       "command": "docker run --rm -v${workspaceFolder}:/mnt/project dawidbuchwald/cc65-tools-make all",
-      "problemMatcher": [ "$gcc" ]
+      "problemMatcher": []
     },
     {
       "group": "build",
@@ -29,7 +29,7 @@
       "label": "Build single (script)",
       "type": "shell",
       "command": "docker run --rm -v${workspaceFolder}:/mnt/project dawidbuchwald/cc65-tools-base ./${input:scriptProjectID}/build.sh",
-      "problemMatcher": [ "$gcc" ]
+      "problemMatcher": []
     },
     {
       "group": "build",
@@ -50,7 +50,7 @@
       "label": "Build single (make)",
       "type": "shell",
       "command": "docker run --rm -v${workspaceFolder}:/mnt/project dawidbuchwald/cc65-tools-make -C ${input:makeProjectID} all",
-      "problemMatcher": [ "$gcc" ]
+      "problemMatcher": []
     },
     {
       "group": "build",
