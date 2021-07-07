@@ -2,11 +2,9 @@ include common/tools.mk
 
 BUILD_FOLDER=build
 
-PROJECTS=01_nop_fill   \
-         02_nop_fill   \
-         03_nop_fill   \
-         04_reset      \
-         05_blink_vasm 
+PROJECTS=01_blink_vasm \
+         02_blink      \
+         04_reset      
 
 TOP_TARGETS=all clean
 

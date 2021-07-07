@@ -1,6 +1,6 @@
-ROM_NAME=04_reset
+ROM_NAME=02_blink
 
-ASM_SOURCES=reset.s
+ASM_SOURCES=blink.s
 FIRMWARE_CFG=firmware.cfg
 
 include ../common/cc65.rules.mk

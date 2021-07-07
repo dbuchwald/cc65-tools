@@ -52,13 +52,11 @@
       "type": "pickString",
       "description": "Single project name",
       "options": [
-        "01_nop_fill",
-        "02_nop_fill",
-        "03_nop_fill",
-        "04_reset",
-        "05_blink_vasm"
+        "01_blink_vasm",
+        "02_blink",
+        "04_reset"
       ],
-      "default": "01_nop_fill"
+      "default": "01_blink_vasm"
     }    
   ]
 }
