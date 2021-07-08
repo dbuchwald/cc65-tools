@@ -4,6 +4,7 @@ BUILD_FOLDER=build
 
 PROJECTS=01_blink_vasm \
          02_blink      \
+         03_blink      \
          04_reset      
 
 TOP_TARGETS=all clean
