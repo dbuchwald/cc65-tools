@@ -208,3 +208,5 @@ Start with downloading Microsoft Visual Studio Code - it's free tool that makes 
 ![01_clean_all_task](Images/01_clean_all_task.png)
 
 As you can see, the whole command (including the paths) has already been pre-populated for you and executed. I will explain the details of this setup later on, for now you can also experiment with "Terminal"->"Run Build Task..."->"Build single project" - it lets you choose the specific sub-project to be compiled/tested or cleaned.
+
+Head on to [first lesson to start](01_blink).
