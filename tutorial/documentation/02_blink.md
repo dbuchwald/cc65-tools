@@ -46,4 +46,29 @@ This is configuration file that describes your actual hardware build, and it alr
 
 That being said, the above file might be intimidating with all the parameters and all. Don't worry, I will explain these in detail.
 
- 
+First section covers memory areas. For now, since we don't intend to use RAM for anything at all, simple ROM location definition will suffice. The following parameters are used in `ROM` definition (please note: this is just a name, it has no meaning whatsoever):
+
+- `start=$8000` is the starting address (hexadecimal) of the ROM space,
+- `size=$8000` is the total size of this memory location. Linker will verify at link time if all the stuff you want to store there can fit in provided space,
+- `type=ro` defines ROM space as read-only. Attempt to write to memory address represented by symbol located in that memory area will cause error at link time,
+- `define=yes` will cause the linker to generate set of symbols representing various properties of this memory area like `__ROM_START__` or `__ROM_SIZE__`,
+- `fill=yes` will cause the linker to fill unused part of this memory area with value specified in `fillval` option,
+- `fillval=$00` defines value that will be used to fill unused memory areas,
+- `file=%O` tells the linker to save the generated memory area to linked binary file.
+
+Second section defines segments - actual usable, addressable areas, where the code and variables will be defined. There are some standard segments (like CODE, ZEROPAGE and BSS) which are to be used for specific purposes, but you can go ahead and change the names as you wish.
+
+Let's look at the parameters used in segment definitions:
+
+- `load=ROM` means that all the code and variables defined in that segment are to be located in ROM memory, and this `ROM` is the memory area defined above,
+- `type=ro` means that all the data stored in this segment is read-only and any attempt to write to it should be treated as an error,
+- `define=yes` will cause the linker to define set of symbols, like described above,
+- `offset=$fffa` means that this particular segment is to be placed at byte 0xFFFA in `ROM` memory,
+- `optional=yes` suppresses error if particular segment is not used in your sources. Sometimes you might want to skip certain segments and it's all fine.
+
+To summarize, our firmware configuration file states that:
+
+1. We have one memory area, starting at address `0x8000` of 32KB continuous read-only space that will be filled with `0x00` and saved to output file,
+2. In that memory area we will have two read-only segments: first one will be called code, and linker itself will decide where to put it, and the second will be called vectors and placed at fixed offset of `0xFFFA`,
+3. Linker will generate symbols for all memory areas and segments.
+
