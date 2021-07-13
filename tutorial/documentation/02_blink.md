@@ -110,7 +110,7 @@ We have now:
   .code
 ```
 
-The difference is obvious. In Ben's example we are telling the compiler exactly where in the memory should are code be located. For CC65 we are using different syntax - we are just simply telling the compiler that whatever machine code is generated here should be put in `CODE` segment, but it's up to linker to determine actual location.
+The difference is obvious. In Ben's example we are telling the compiler exactly where in the memory should the code be located. For CC65 we are using different syntax - we are just simply telling the compiler that whatever machine code is generated here should be put in `CODE` segment, but it's up to linker to determine actual location.
 
 Just for consistency, second difference is very similar, instead of:
 
@@ -125,3 +125,111 @@ We have:
 ```
 
 And that's just it. Compiler will generate code (referring to undetermined value of `reset` label at this point), and linker will calculate actual `reset` location in memory after placing all objects in `code` segment.
+
+Again, all this fun and games with segments definition might seem excessive for the purpose, but there is a reason to do it that way. Specifying arbitrary addresses in your code will make it much less portable and much less reusable. While it doesn't matter when you have single assembly source, it gets more and more important the more files you want to include in your build. Proper software development practices require certain level of "separation of concerns", so you don't want your LCD routines to depend on variables or location of functions for ACIA operation.
+
+Basically: this is how big boys do it, so grow up and follow :)
+
+## Building the code
+
+Obviously we need to compile the code and link the ROM binary. For this purpose we are going to use pretty familiar `makefile`:
+
+```makefile
+ROM_NAME=02_blink
+
+ASM_SOURCES=blink.s
+FIRMWARE_CFG=firmware.cfg
+
+include ../common/cc65.rules.mk
+```
+
+Compared to previous example, there are two changes. First one is the addition of the new file, `firmware.cfg` that will be used in linking our ROM image. The other is more important and it is inclusion of the `common/cc65.rules.mk` file which is specific to CC65-based builds.
+
+Let's take a short look at the shared `cc65.rules.mk` file:
+
+```makefile
+include ../common/tools.mk
+
+BUILD_FOLDER=../build
+TEMP_FOLDER=$(BUILD_FOLDER)/$(ROM_NAME)
+ROM_FILE=$(BUILD_FOLDER)/$(ROM_NAME).bin
+MAP_FILE=$(TEMP_FOLDER)/$(ROM_NAME).map
+
+ASM_OBJECTS=$(ASM_SOURCES:%.s=$(TEMP_FOLDER)/%.o)
+
+# Compile assembler sources
+$(TEMP_FOLDER)/%.o: %.s
+	@$(MKDIR_BINARY) $(MKDIR_FLAGS) $(TEMP_FOLDER)
+	$(CA65_BINARY) $(CA65_FLAGS) -o $@ -l $(@:.o=.lst) $<
+
+# Link ROM image
+$(ROM_FILE): $(ASM_OBJECTS) $(FIRMWARE_CFG)
+	@$(MKDIR_BINARY) $(MKDIR_FLAGS) $(BUILD_FOLDER)
+	$(LD65_BINARY) $(LD65_FLAGS) -C $(FIRMWARE_CFG) -o $@ -m $(MAP_FILE) $(ASM_OBJECTS)
+
+# Default target
+all: $(ROM_FILE)
+
+# Build and dump output
+test: $(ROM_FILE)
+	$(HEXDUMP_BINARY) $(HEXDUMP_FLAGS) $<
+	$(MD5_BINARY) $<
+
+# Clean build artifacts
+clean:
+	$(RM_BINARY) -f $(ROM_FILE) \
+	$(MAP_FILE) \
+	$(ASM_OBJECTS) \
+	$(ASM_OBJECTS:%.o=%.lst)
+```
+
+Starting from the bottom, you can see the familiar `all`, `test` and `clean` targets. Nothing new there, so let's focus on the first half.
+
+We have new file definition (`MAP_FILE`) - it will be generated at link time and it will provide all the information about memory areas, segments, symbols and addresses established at link time.
+
+Next line can be pretty confusing, but this is important, as this is one of the most powerful features of `make`:
+
+```makefile
+ASM_OBJECTS=$(ASM_SOURCES:%.s=$(TEMP_FOLDER)/%.o)
+```
+
+This line will result of building list of object files (which will be created by compiler and used as input by linker) based on the list of assembly files using pattern replacement. Literally it means "build ASM_OBJECTS list that will contain all entries in ASM_SOURCES list matching pattern %.s and replace each %.s name with value of TEMP_FOLDER/%.o". In our case it will take the single item (`blink.s`) and replace it by `../build/02_blink/blink.o`.
+
+This kind of pattern substitution is very powerful in `make` and it allows you to generate lists of dependencies for instance.
+
+Now that we have a list of object files, generated from list of sources to be compiled, we can tell make how to compile each and every file:
+
+```makefile
+$(TEMP_FOLDER)/%.o: %.s
+	@$(MKDIR_BINARY) $(MKDIR_FLAGS) $(TEMP_FOLDER)
+	$(CA65_BINARY) $(CA65_FLAGS) -o $@ -l $(@:.o=.lst) $<
+```
+
+This means: if you need some object file (any name whatsoever) in TEMP_FOLDER location, it can be created using this recipe, depending on assembly file with identical name (with .s extension). The recipe consists of two commands:
+
+1. `mkdir -p ../build/02_blink` - create directory in which the object file will be saved,
+2. `ca65 --cpu 65C02 -o ../build/02_blink/blink.o -l ../build/02_blink/blink.lst blink.s` - compile `blink.s` file using 65C02 opcode set and generate object file (`blink.o`) and listning file (`blink.lst`) in `../build/02_blink/` folder.
+
+Note how listning file is generated from the recipe target name: `$(@:.o=.lst)` means take the target name (`@`) and replace `.o` by `.lst`. Simple, efficient and once you get used to it, also pretty convenient.
+
+Obviously, this target isn't very useful on it's own, but combined with recipe for ROM binary file creation it makes sense:
+
+```makefile
+$(ROM_FILE): $(ASM_OBJECTS) $(FIRMWARE_CFG)
+	@$(MKDIR_BINARY) $(MKDIR_FLAGS) $(BUILD_FOLDER)
+	$(LD65_BINARY) $(LD65_FLAGS) -C $(FIRMWARE_CFG) -o $@ -m $(MAP_FILE) $(ASM_OBJECTS)
+```
+
+Here we define how to build ROM file. First, it depends on two things - list of object files (`ASM_OBJECTS`) and the `firmware.cfg` file. Each time any of the object files or firmware configuration changes, it forces linking ROM binary again.
+
+The recipe contains of two commands. First one is simply building the target directory (`../build`) where the target ROM will be saved.
+
+Second part is invoking the linker with the following command:
+
+`ld65 -C firmware.cfg -o ../build/02_blink.bin -m ../build/02_blink/02_blink.map ../build/02_blink/blink.o`
+
+It means: build the bin file with accompanying map file using this firmware configuration file and linking the following objects (listed at the end).
+
+Simple, isn't it?
+
+Build it as you did before, take a look at map and lst files. Read the `makefile` again, make sure all the dependencies are clear and the desired flow makes sense and when ready, move on to next section.
