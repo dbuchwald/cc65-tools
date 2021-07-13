@@ -54,7 +54,7 @@
       "options": [
         "01_blink_vasm",
         "02_blink",
-        "04_reset"
+        "03_blink"
       ],
       "default": "01_blink_vasm"
     }    
