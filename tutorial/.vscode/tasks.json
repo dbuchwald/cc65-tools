@@ -7,42 +7,42 @@
       "group": "build",
       "label": "Build All",
       "type": "shell",
-      "command": "docker run --rm -v${workspaceFolder}:/mnt/project dawidbuchwald/cc65-tools-make all",
+      "command": "make all",
       "problemMatcher": []
     },
     {
       "group": "build",
       "label": "Test All",
       "type": "shell",
-      "command": "docker run --rm -v${workspaceFolder}:/mnt/project dawidbuchwald/cc65-tools-make test",
+      "command": "make test",
       "problemMatcher": []
     },
     {
       "group": "build",
       "label": "Clean All",
       "type": "shell",
-      "command": "docker run --rm -v${workspaceFolder}:/mnt/project dawidbuchwald/cc65-tools-make clean",
+      "command": "make clean",
       "problemMatcher": []
     },
     {
       "group": "build",
       "label": "Build single project",
       "type": "shell",
-      "command": "docker run --rm -v${workspaceFolder}:/mnt/project dawidbuchwald/cc65-tools-make -C ${input:projectID} all",
+      "command": "make -C ${input:projectID} all",
       "problemMatcher": []
     },
     {
       "group": "build",
       "label": "Test single project",
       "type": "shell",
-      "command": "docker run --rm -v${workspaceFolder}:/mnt/project dawidbuchwald/cc65-tools-make -C ${input:projectID} test",
+      "command": "make -C ${input:projectID} test",
       "problemMatcher": []
     },
     {
       "group": "build",
       "label": "Clean single project",
       "type": "shell",
-      "command": "docker run --rm -v${workspaceFolder}:/mnt/project dawidbuchwald/cc65-tools-make -C ${input:projectID} clean",
+      "command": "make -C ${input:projectID} clean",
       "problemMatcher": []
     }
   ],
@@ -57,6 +57,6 @@
         "03_blink"
       ],
       "default": "01_blink_vasm"
-    }    
+    }
   ]
 }
